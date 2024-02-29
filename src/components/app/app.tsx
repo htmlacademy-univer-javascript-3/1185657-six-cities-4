@@ -27,7 +27,7 @@ function App({pageMainCntCard}: AppScreenProps): JSX.Element {
           element={<FavoritesScreen />}
         />
         <Route
-          path={AppRoute.Offer}
+          path={`${AppRoute.Offer}/:id`}
           element={<OfferScreen />}
         />
         <Route
