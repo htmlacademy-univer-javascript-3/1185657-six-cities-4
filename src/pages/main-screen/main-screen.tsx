@@ -1,11 +1,10 @@
 import PlaceCard from '../../components/place-card/place-card';
 
-type PageMainProps = {
+type MainScreenProps = {
   cntCards: number;
 };
 
-function MainScreen(props: PageMainProps): JSX.Element {
-  const {cntCards} = props;
+function MainScreen({cntCards}: MainScreenProps): JSX.Element {
   const cardsArray = Array.from({ length: cntCards }, (_, index) => index);
   return (
     <div className="page page--gray page--main">
