@@ -1,4 +1,4 @@
-import PageMain from '../pages/page-main/page-main';
+import PageMain from '../../pages/main-screen/main-screen';
 
 type AppProps = {
   pageMainCntCard: number;
