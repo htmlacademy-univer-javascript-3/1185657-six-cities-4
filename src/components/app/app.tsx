@@ -1,4 +1,4 @@
-import PageMain from '../../pages/main-screen/main-screen';
+import MainScreen from '../../pages/main-screen/main-screen';
 
 type AppProps = {
   pageMainCntCard: number;
@@ -7,7 +7,7 @@ type AppProps = {
 function App(props: AppProps): JSX.Element {
   const { pageMainCntCard } = props;
   return (
-    <PageMain
+    <MainScreen
       cntCards={pageMainCntCard}
     />
   );

@@ -4,7 +4,7 @@ type PageMainProps = {
   cntCards: number;
 };
 
-function PageMain(props: PageMainProps): JSX.Element {
+function MainScreen(props: PageMainProps): JSX.Element {
   const {cntCards} = props;
   const cardsArray = Array.from({ length: cntCards }, (_, index) => index);
   return (
@@ -112,4 +112,4 @@ function PageMain(props: PageMainProps): JSX.Element {
   );
 }
 
-export default PageMain;
+export default MainScreen;
