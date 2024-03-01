@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
 
@@ -11,9 +11,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <NavLink to={{ pathname: `${AppRoute.Offer}/${id}` }}>
+        <Link to={{ pathname: `${AppRoute.Offer}/${id}` }}>
           <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image"/>
-        </NavLink>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -35,7 +35,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <NavLink to={{ pathname: `${AppRoute.Offer}/${id}` }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</NavLink>
+          <Link to={{ pathname: `${AppRoute.Offer}/${id}` }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
