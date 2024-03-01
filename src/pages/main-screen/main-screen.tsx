@@ -97,7 +97,7 @@ function MainScreen({cntCards}: MainScreenProps): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {cardsArray.map((index) => (
-                  <PlaceCard key={index} />
+                  <PlaceCard key={index} id={index} />
                 ))}
               </div>
             </section>

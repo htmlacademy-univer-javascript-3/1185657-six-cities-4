@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -8,16 +8,18 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
-  pageMainCntCard: number;
+  cntCard: number;
+  authorizationStatus: AuthorizationStatus;
 };
 
-function App({pageMainCntCard}: AppScreenProps): JSX.Element {
+function App(props: AppScreenProps): JSX.Element {
+  const { cntCard, authorizationStatus } = props;
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen cntCards={pageMainCntCard} />}
+          element={<MainScreen cntCards={cntCard} />}
         />
         <Route
           path={AppRoute.Login}
@@ -27,7 +29,7 @@ function App({pageMainCntCard}: AppScreenProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <FavoritesScreen/>
             </PrivateRoute>
