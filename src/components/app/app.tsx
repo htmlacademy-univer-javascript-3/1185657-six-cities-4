@@ -31,7 +31,7 @@ function App({authorizationStatus, offers}: AppScreenProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <FavoritesScreen/>
+              <FavoritesScreen offers={offers}/>
             </PrivateRoute>
           }
         />
