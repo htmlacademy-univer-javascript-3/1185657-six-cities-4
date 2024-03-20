@@ -1,11 +1,11 @@
-import PlaceCard from '../../components/place-card/place-card';
+import { PlaceCards } from '../../types/types';
+import PlaceCardsList from '../../components/place-card-list/place-cards-list';
 
 type MainScreenProps = {
-  cntCards: number;
+  placeCards: PlaceCards;
 };
 
-function MainScreen({cntCards}: MainScreenProps): JSX.Element {
-  const cardsArray = Array.from({ length: cntCards }, (_, index) => index);
+function MainScreen({placeCards}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,11 +95,7 @@ function MainScreen({cntCards}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {cardsArray.map((index) => (
-                  <PlaceCard key={index} id={index} />
-                ))}
-              </div>
+              <PlaceCardsList placeCards={placeCards} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

@@ -1,7 +1,7 @@
 import { Offer } from '../types/types';
 import reviews from './reviews';
 import hosts from './hosts';
-import nearbyPlaces from './nearbyPlaces';
+import placeCards from './placeCards';
 
 const offers: Offer[] = [
   {
@@ -23,7 +23,7 @@ const offers: Offer[] = [
       },
       host: hosts[0],
       reviews: reviews.slice(0, 3),
-      nearPlaces: nearbyPlaces.slice(0, 3),
+      nearPlaces: placeCards.slice(0, 3),
     },
   },
   {
@@ -45,7 +45,7 @@ const offers: Offer[] = [
       },
       host: hosts[1],
       reviews: reviews.slice(3, 6),
-      nearPlaces: nearbyPlaces.slice(3, 6),
+      nearPlaces: placeCards.slice(3, 6),
     },
   },
   {
@@ -67,7 +67,7 @@ const offers: Offer[] = [
       },
       host: hosts[2],
       reviews: reviews.slice(6, 8),
-      nearPlaces: nearbyPlaces.slice(6, 8),
+      nearPlaces: placeCards.slice(6, 8),
     },
   },
   {
@@ -89,7 +89,7 @@ const offers: Offer[] = [
       },
       host: hosts[3],
       reviews: reviews.slice(0, 4),
-      nearPlaces: nearbyPlaces.slice(0, 4),
+      nearPlaces: placeCards.slice(0, 4),
     },
   },
 ];

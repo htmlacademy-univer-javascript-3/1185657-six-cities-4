@@ -6,20 +6,20 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import { PlaceCards } from '../../types/types';
 
 type AppScreenProps = {
-  cntCard: number;
   authorizationStatus: AuthorizationStatus;
+  placeCards: PlaceCards;
 };
 
-function App(props: AppScreenProps): JSX.Element {
-  const { cntCard, authorizationStatus } = props;
+function App({authorizationStatus, placeCards}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen cntCards={cntCard} />}
+          element={<MainScreen placeCards={placeCards} />}
         />
         <Route
           path={AppRoute.Login}

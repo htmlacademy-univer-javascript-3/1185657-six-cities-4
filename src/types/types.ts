@@ -16,7 +16,8 @@ export type Host = {
   description: string[];
 }
 
-export type NearbyPlace = {
+export type PlaceCard = {
+  id: number;
   imageUrl: string;
   price: string;
   name: string;
@@ -45,9 +46,9 @@ export type Offer = {
     };
     host: Host;
     reviews: Reviews;
-    nearPlaces: NearbyPlaces;
+    nearPlaces: PlaceCards;
   };
 }
 
 export type Reviews = Review[];
-export type NearbyPlaces = NearbyPlace[];
+export type PlaceCards = PlaceCard[];
