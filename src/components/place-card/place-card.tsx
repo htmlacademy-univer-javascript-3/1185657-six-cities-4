@@ -11,7 +11,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={{ pathname: `${AppRoute.Offer}/${id}` }}>
+        <Link to={{ pathname: `offer/${id}` }}>
           <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image"/>
         </Link>
       </div>
