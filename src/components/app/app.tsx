@@ -36,7 +36,7 @@ function App({authorizationStatus, placeCards}: AppScreenProps): JSX.Element {
           }
         />
         <Route
-          path={`${AppRoute.Offer}/:id`}
+          path={`${AppRoute.Offer}`}
           element={<OfferScreen />}
         />
         <Route
