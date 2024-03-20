@@ -1,20 +1,22 @@
-import PlaceCard from '../../components/place-card/place-card';
+import { Offers } from '../../types/types';
+import PlaceCardsList from '../../components/place-card-list/place-cards-list';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 
 type MainScreenProps = {
-  cntCards: number;
+  offers: Offers;
 };
 
-function MainScreen({cntCards}: MainScreenProps): JSX.Element {
-  const cardsArray = Array.from({ length: cntCards }, (_, index) => index);
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
+              <Link className="header__logo-link header__logo-link--active" to={{ pathname: AppRoute.Main }}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -23,7 +25,7 @@ function MainScreen({cntCards}: MainScreenProps): JSX.Element {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -95,11 +97,7 @@ function MainScreen({cntCards}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {cardsArray.map((index) => (
-                  <PlaceCard key={index} id={index} />
-                ))}
-              </div>
+              <PlaceCardsList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
