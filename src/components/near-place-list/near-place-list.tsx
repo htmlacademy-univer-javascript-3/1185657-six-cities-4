@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Offers } from '../../types/types';
-import PlaceCardComponent from '../place-card/place-card';
 import { ACTIVE_CARD } from '../../const';
+import NearPlace from '../near-place/near-place';
 
 
-type PlaceCardsListProps = {
+type NearPlaceListProps = {
   offers: Offers;
 };
 
-function PlaceCardsList({offers}: PlaceCardsListProps): JSX.Element {
+function NearPlaceList({offers}: NearPlaceListProps): JSX.Element {
   const cardsArray = Array.from({ length: offers.length }, (_, index) => index);
   const [, setActiveCard] = useState(ACTIVE_CARD);
 
@@ -16,9 +16,9 @@ function PlaceCardsList({offers}: PlaceCardsListProps): JSX.Element {
     setActiveCard(id);
   };
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="near-places__list places__list">
       {cardsArray.map((index) => (
-        <PlaceCardComponent
+        <NearPlace
           key={index}
           offer={offers[index]}
           onMouseEnter={() => handleCardMouseEnter(offers[index].id)}
@@ -29,4 +29,4 @@ function PlaceCardsList({offers}: PlaceCardsListProps): JSX.Element {
   );
 }
 
-export default PlaceCardsList;
+export default NearPlaceList;

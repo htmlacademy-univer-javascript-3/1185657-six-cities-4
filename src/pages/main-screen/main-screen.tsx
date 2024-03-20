@@ -1,11 +1,11 @@
-import { PlaceCards } from '../../types/types';
+import { Offers } from '../../types/types';
 import PlaceCardsList from '../../components/place-card-list/place-cards-list';
 
 type MainScreenProps = {
-  placeCards: PlaceCards;
+  offers: Offers;
 };
 
-function MainScreen({placeCards}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,7 +95,7 @@ function MainScreen({placeCards}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList placeCards={placeCards} />
+              <PlaceCardsList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

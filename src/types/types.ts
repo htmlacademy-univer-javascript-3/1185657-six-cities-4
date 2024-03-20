@@ -7,6 +7,7 @@ export type Review = {
   rating: number;
   text: string;
   date: Date;
+  id: number;
 }
 
 export type Host = {
@@ -16,39 +17,24 @@ export type Host = {
   description: string[];
 }
 
-export type PlaceCard = {
+export type Offer = {
+  city: string;
   id: number;
-  imageUrl: string;
-  price: string;
+  cardImage: string;
+  price: number;
   name: string;
   type: string;
   rating: number;
   isPremium?: boolean;
   isBookmarked?: boolean;
+  bedrooms: number;
+  maxGuests: number;
+  insideItems: string[];
+  offerGallery: string[];
+  host: Host;
+  reviews: Reviews;
+  nearPlaces: Offers;
 }
 
-export type Offer = {
-  header: {
-    userEmail: string;
-    favoriteCount: number;
-  };
-  main: {
-    offerGallery: string[];
-    offerDetails: {
-      name: string;
-      isPremium?: boolean;
-      rating: number;
-      type: string;
-      bedrooms: number;
-      maxGuests: number;
-      price: string;
-      insideItems: string[];
-    };
-    host: Host;
-    reviews: Reviews;
-    nearPlaces: PlaceCards;
-  };
-}
-
+export type Offers = Offer[]
 export type Reviews = Review[];
-export type PlaceCards = PlaceCard[];

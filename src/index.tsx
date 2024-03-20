@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {AuthorizationStatus} from './const';
-import placeCards from './mocks/placeCards';
+import offers from './mocks/offers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,8 +11,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      authorizationStatus = {AuthorizationStatus.NoAuth}
-      placeCards = {placeCards}
+      authorizationStatus = {AuthorizationStatus.Auth}
+      offers = {offers}
     />
   </React.StrictMode>
 );

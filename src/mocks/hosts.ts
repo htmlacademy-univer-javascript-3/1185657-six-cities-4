@@ -6,7 +6,7 @@ const hosts: Host[] = [
   {
     name: 'Alice Anderson',
     avatarSrc: `${AVATAR_URL}?1`,
-    status: 'Superhost',
+    status: 'Pro',
     description: [
       'Experienced host with excellent ratings.',
       'Available to help guests with any questions or concerns.',
@@ -15,7 +15,7 @@ const hosts: Host[] = [
   {
     name: 'Bob Baker',
     avatarSrc: `${AVATAR_URL}?2`,
-    status: 'Host',
+    status: 'Average',
     description: [
       'Friendly and accommodating host.',
     ],
@@ -23,7 +23,7 @@ const hosts: Host[] = [
   {
     name: 'Charlie Carter',
     avatarSrc: `${AVATAR_URL}?3`,
-    status: 'Superhost',
+    status: 'Pro',
     description: [
       'Highly-rated host known for exceptional hospitality.',
       'Dedicated to ensuring guests have a memorable experience.',
@@ -33,7 +33,7 @@ const hosts: Host[] = [
   {
     name: 'David Davis',
     avatarSrc: `${AVATAR_URL}?4`,
-    status: 'Host',
+    status: 'Average',
     description: [
       'Experienced host with a warm and welcoming personality.',
       'Committed to making guests feel at home during their stay.',

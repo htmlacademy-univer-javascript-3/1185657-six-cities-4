@@ -6,20 +6,20 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { PlaceCards } from '../../types/types';
+import { Offers } from '../../types/types';
 
 type AppScreenProps = {
   authorizationStatus: AuthorizationStatus;
-  placeCards: PlaceCards;
+  offers: Offers;
 };
 
-function App({authorizationStatus, placeCards}: AppScreenProps): JSX.Element {
+function App({authorizationStatus, offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen placeCards={placeCards} />}
+          element={<MainScreen offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
@@ -37,7 +37,7 @@ function App({authorizationStatus, placeCards}: AppScreenProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Offer}`}
-          element={<OfferScreen />}
+          element={<OfferScreen offers={offers}/>}
         />
         <Route
           path="*"
