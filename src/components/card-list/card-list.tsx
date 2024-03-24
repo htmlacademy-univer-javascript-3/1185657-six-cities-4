@@ -48,7 +48,7 @@ function CardList({offers, cardsType}: CardListProps): JSX.Element {
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{offers[0].city}</span>
+                <span>{offers[0].city.title}</span>
               </a>
             </div>
           </div>

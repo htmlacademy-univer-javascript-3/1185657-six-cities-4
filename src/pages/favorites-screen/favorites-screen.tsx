@@ -9,10 +9,10 @@ type FavoritesScreenProps = {
 
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
   // Функция для фильтрации отелей по наличию закладок
-  const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city === city && offer.isBookmarked);
+  const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city.title === city && offer.isBookmarked);
 
   // Получение уникальных городов из списка отелей
-  const cities = Array.from(new Set(offers.map((offer) => offer.city)));
+  const cities = Array.from(new Set(offers.map((offer) => offer.city.title)));
   return (
     <div className="page">
       <header className="header">
