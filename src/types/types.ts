@@ -18,7 +18,11 @@ export type Host = {
 }
 
 export type Offer = {
-  city: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  city: City;
   id: number;
   cardImage: string;
   price: number;
@@ -35,6 +39,19 @@ export type Offer = {
   reviews: Reviews;
   nearPlaces: Offers;
 }
+
+export const enum CardType {
+  Favorite = 'Favorite',
+  Near = 'Near',
+  City = 'City'
+}
+
+export type City = {
+  title: string;
+  lat: number;
+  lng: number;
+  zoom: number;
+};
 
 export type Offers = Offer[]
 export type Reviews = Review[];

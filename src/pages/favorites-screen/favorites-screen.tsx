@@ -1,7 +1,7 @@
 import { AppRoute } from '../../const';
-import { Link } from 'react-router-dom';
-import { Offers } from '../../types/types';
-import FavoriteCardList from '../../components/favorite-card-list/favorite-card-list';
+import { Link, NavLink } from 'react-router-dom';
+import { CardType, Offers } from '../../types/types';
+import CardList from '../../components/card-list/card-list';
 
 type FavoritesScreenProps = {
   offers: Offers;
@@ -9,10 +9,10 @@ type FavoritesScreenProps = {
 
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
   // Функция для фильтрации отелей по наличию закладок
-  const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city === city && offer.isBookmarked);
+  const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city.title === city && offer.isBookmarked);
 
   // Получение уникальных городов из списка отелей
-  const cities = Array.from(new Set(offers.map((offer) => offer.city)));
+  const cities = Array.from(new Set(offers.map((offer) => offer.city.title)));
   return (
     <div className="page">
       <header className="header">
@@ -26,12 +26,12 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -50,7 +50,7 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {cities.map((city) => (
-                <FavoriteCardList key={city} city={city} offers={filterBookmarkedOffers(city)} />
+                <CardList key={city} cardsType={CardType.Favorite} offers={filterBookmarkedOffers(city)} />
               ))}
             </ul>
           </section>

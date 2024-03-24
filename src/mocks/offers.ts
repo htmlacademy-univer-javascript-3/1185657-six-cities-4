@@ -6,7 +6,16 @@ const PLACEHOLDER_URL = 'https://via.placeholder.com/260x200';
 
 const offers: Offers = [
   {
-    city: 'Amsterdam',
+    coordinates: {
+      lng: 4.85309666406198,
+      lat: 52.3909553943508,
+    },
+    city: {
+      title: 'Amsterdam',
+      lng: 4.85309666406198,
+      lat: 52.3909553943508,
+      zoom: 8
+    },
     id: 1,
     cardImage: `${PLACEHOLDER_URL}?text=Card+1`,
     price: 120,
@@ -24,7 +33,16 @@ const offers: Offers = [
     nearPlaces: []
   },
   {
-    city: 'Amsterdam',
+    coordinates: {
+      lng: 4.85309666406198,
+      lat: 52.3609553943508,
+    },
+    city: {
+      title: 'Amsterdam',
+      lng: 4.85309666406198,
+      lat: 52.3609553943508,
+      zoom: 8
+    },
     id: 2,
     cardImage: `${PLACEHOLDER_URL}?text=Card+2`,
     price: 150,
@@ -42,7 +60,16 @@ const offers: Offers = [
     nearPlaces: []
   },
   {
-    city: 'Amsterdam',
+    coordinates: {
+      lng: 4.929309666406198,
+      lat: 52.3909553943508,
+    },
+    city: {
+      title: 'Amsterdam',
+      lng: 4.929309666406198,
+      lat: 52.3909553943508,
+      zoom: 8
+    },
     id: 3,
     cardImage: `${PLACEHOLDER_URL}?text=Card+3`,
     price: 100,
@@ -60,7 +87,16 @@ const offers: Offers = [
     nearPlaces: []
   },
   {
-    city: 'Amsterdam',
+    coordinates: {
+      lng: 4.939309666406198,
+      lat: 52.3809553943508,
+    },
+    city: {
+      title: 'Amsterdam',
+      lng: 4.939309666406198,
+      lat: 52.3809553943508,
+      zoom: 8
+    },
     id: 4,
     cardImage: `${PLACEHOLDER_URL}?text=Card+4`,
     price: 200,
