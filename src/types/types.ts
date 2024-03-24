@@ -36,5 +36,11 @@ export type Offer = {
   nearPlaces: Offers;
 }
 
+export const enum CardType {
+  Favorite = 'Favorite',
+  Near = 'Near',
+  City = 'City'
+}
+
 export type Offers = Offer[]
 export type Reviews = Review[];

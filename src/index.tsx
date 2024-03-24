@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      authorizationStatus = {AuthorizationStatus.NoAuth}
+      authorizationStatus = {AuthorizationStatus.Auth}
       offers = {offers}
     />
   </React.StrictMode>

@@ -1,11 +1,12 @@
-export enum AppRoute {
+export const enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer/:id',
+  Error = '/error'
 }
 
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'

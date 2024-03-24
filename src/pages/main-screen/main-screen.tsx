@@ -1,7 +1,7 @@
-import { Offers } from '../../types/types';
-import PlaceCardsList from '../../components/place-card-list/place-cards-list';
+import { CardType, Offers } from '../../types/types';
+import CardList from '../../components/card-list/card-list';
 import { AppRoute } from '../../const';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 type MainScreenProps = {
   offers: Offers;
@@ -21,12 +21,12 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                     <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -97,7 +97,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList offers={offers} />
+              <CardList offers={offers} cardsType={CardType.City} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
