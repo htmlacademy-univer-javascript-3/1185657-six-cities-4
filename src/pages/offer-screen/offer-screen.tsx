@@ -1,9 +1,10 @@
 import { AppRoute } from '../../const';
 import { CardType, Offers } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
-import { monthMap } from '../../const';
 import CardList from '../../components/card-list/card-list';
 import ReviewForm from '../../components/review-form/review-form';
+import ReviewList from '../../components/review-list/review-list';
+import Map from '../../components/map/map';
 
 type OfferScreenProps = {
   offers: Offers;
@@ -135,37 +136,12 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                 </div>
                 <section className="offer__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{selectedOffer.reviews.length}</span></h2>
-                  <ul className="reviews__list">
-                    {selectedOffer.reviews.map((item) => (
-                      <li key={item.id} className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src={item.user.avatarSrc} width="54" height="54" alt="Reviews avatar"/>
-                          </div>
-                          <span className="reviews__user-name">
-                            {item.user.name}
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: `${item.rating * 20}%`}}></span>
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">
-                            {item.text}
-                          </p>
-                          <time className="reviews__time" dateTime={item.date.toISOString().slice(0, 10)}>{`${monthMap[Number(item.date.toISOString().slice(6, 7))]} ${item.date.toISOString().slice(0, 4)}`}</time>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <ReviewList reviews={selectedOffer.reviews} />
                   <ReviewForm />
                 </section>
               </div>
             </div>
-            <section className="offer__map map"></section>
+            <section className="offer__map map"><Map city={selectedOffer.city} points={selectedOffer.nearPlaces} selectedPoint={undefined}/></section>
           </section>
           <div className="container">
             <section className="near-places places">
