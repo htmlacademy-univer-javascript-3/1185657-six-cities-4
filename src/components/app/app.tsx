@@ -8,12 +8,12 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import { Offers } from '../../types/types';
 
-type AppScreenProps = {
+type AppProps = {
   authorizationStatus: AuthorizationStatus;
   offers: Offers;
 };
 
-function App({authorizationStatus, offers}: AppScreenProps): JSX.Element {
+function App({authorizationStatus, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>

@@ -6,7 +6,7 @@ import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map';
 
 
-type MapProps = {
+type MapComponentProps = {
   city: City;
   points: Offers;
   selectedPoint: Offer | undefined;
@@ -24,7 +24,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): JSX.Element {
+function MapComponent(props: MapComponentProps): JSX.Element {
   const {city, points, selectedPoint} = props;
 
   const mapRef = useRef(null);
@@ -57,4 +57,4 @@ function Map(props: MapProps): JSX.Element {
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export default MapComponent;

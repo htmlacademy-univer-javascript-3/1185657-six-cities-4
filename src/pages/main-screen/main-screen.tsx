@@ -1,6 +1,6 @@
 import { CardType, Offers } from '../../types/types';
-import CardList from '../../components/card-list/card-list';
-import Map from '../../components/map/map';
+import CardListComponent from '../../components/card-list/card-list';
+import MapComponent from '../../components/map/map';
 import { AppRoute } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -98,10 +98,10 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CardList offers={offers} cardsType={CardType.City} />
+              <CardListComponent offers={offers} cardsType={CardType.City} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map city={offers[0].city} points={offers} selectedPoint={undefined}/></section>
+              <section className="cities__map map"><MapComponent city={offers[0].city} points={offers} selectedPoint={undefined}/></section>
             </div>
           </div>
         </div>

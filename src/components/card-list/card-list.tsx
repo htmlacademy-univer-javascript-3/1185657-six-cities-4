@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Offers, CardType } from '../../types/types';
-import Card from '../card/card';
+import CardComponent from '../card/card';
 import { ACTIVE_CARD } from '../../const';
 
 
-type CardListProps = {
+type CardListComponentProps = {
   offers: Offers;
   cardsType: CardType;
 };
 
-function CardList({offers, cardsType}: CardListProps): JSX.Element {
+function CardListComponent({offers, cardsType}: CardListComponentProps): JSX.Element {
   const cardsArray = Array.from({ length: offers.length }, (_, index) => index);
   const [, setActiveCard] = useState(ACTIVE_CARD);
 
@@ -31,7 +31,7 @@ function CardList({offers, cardsType}: CardListProps): JSX.Element {
   const getCards = (type: CardType) => (
     <div className={handleDivClass(type)}>
       {cardsArray.map((index) => (
-        <Card
+        <CardComponent
           key={index}
           offer={offers[index]}
           cardType={type}
@@ -63,4 +63,4 @@ function CardList({offers, cardsType}: CardListProps): JSX.Element {
   return handleListType(cardsType);
 }
 
-export default CardList;
+export default CardListComponent;

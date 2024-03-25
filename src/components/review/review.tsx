@@ -1,11 +1,11 @@
 import { monthMap } from '../../const';
 import { Review } from '../../types/types';
 
-type CardProps = {
+type ReviewComponentProps = {
   review: Review;
 }
 
-function ReviewItem({review}: CardProps): JSX.Element {
+function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
   return (
     <li key={review.id} className="reviews__item">
       <div className="reviews__user user">
@@ -32,4 +32,4 @@ function ReviewItem({review}: CardProps): JSX.Element {
   );
 }
 
-export default ReviewItem;
+export default ReviewComponent;

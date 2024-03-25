@@ -1,7 +1,7 @@
 import { AppRoute } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 import { CardType, Offers } from '../../types/types';
-import CardList from '../../components/card-list/card-list';
+import CardListComponent from '../../components/card-list/card-list';
 
 type FavoritesScreenProps = {
   offers: Offers;
@@ -50,7 +50,7 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {cities.map((city) => (
-                <CardList key={city} cardsType={CardType.Favorite} offers={filterBookmarkedOffers(city)} />
+                <CardListComponent key={city} cardsType={CardType.Favorite} offers={filterBookmarkedOffers(city)} />
               ))}
             </ul>
           </section>
