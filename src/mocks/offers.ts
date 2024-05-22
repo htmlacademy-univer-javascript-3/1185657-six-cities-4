@@ -14,7 +14,7 @@ const offers: Offers = [
       title: 'Amsterdam',
       lng: 4.85309666406198,
       lat: 52.3909553943508,
-      zoom: 8
+      zoom: 12
     },
     id: 1,
     cardImage: `${PLACEHOLDER_URL}?text=Card+1`,
@@ -30,7 +30,7 @@ const offers: Offers = [
     offerGallery: [`${PLACEHOLDER_URL}?text=Place+1+1`, `${PLACEHOLDER_URL}?text=Place+1+2`, `${PLACEHOLDER_URL}?text=Place+1+3`, `${PLACEHOLDER_URL}?text=Place+1+4`, `${PLACEHOLDER_URL}?text=Place+1+5`, `${PLACEHOLDER_URL}?text=Place+1+6`],
     host: hosts[0],
     reviews: reviews.slice(0, 3),
-    nearPlaces: []
+    nearPlaces: [] // Это поле будет заполнено позже
   },
   {
     coordinates: {
@@ -41,7 +41,7 @@ const offers: Offers = [
       title: 'Amsterdam',
       lng: 4.85309666406198,
       lat: 52.3609553943508,
-      zoom: 8
+      zoom: 12
     },
     id: 2,
     cardImage: `${PLACEHOLDER_URL}?text=Card+2`,
@@ -68,7 +68,7 @@ const offers: Offers = [
       title: 'Amsterdam',
       lng: 4.929309666406198,
       lat: 52.3909553943508,
-      zoom: 8
+      zoom: 12
     },
     id: 3,
     cardImage: `${PLACEHOLDER_URL}?text=Card+3`,
@@ -95,7 +95,7 @@ const offers: Offers = [
       title: 'Amsterdam',
       lng: 4.939309666406198,
       lat: 52.3809553943508,
-      zoom: 8
+      zoom: 12
     },
     id: 4,
     cardImage: `${PLACEHOLDER_URL}?text=Card+4`,
@@ -113,11 +113,33 @@ const offers: Offers = [
     reviews: reviews.slice(0, 4),
     nearPlaces: [],
   },
+  {
+    coordinates: {
+      lng: 2.3522219,
+      lat: 48.856614,
+    },
+    city: {
+      title: 'Paris',
+      lng: 2.3522219,
+      lat: 48.856614,
+      zoom: 12
+    },
+    id: 5,
+    cardImage: `${PLACEHOLDER_URL}?text=Card+5`,
+    price: 120,
+    name: 'Beautiful & luxurious studio at great location',
+    type: 'Apartment',
+    rating: 4.8,
+    isPremium: true,
+    isBookmarked: true,
+    bedrooms: 1,
+    maxGuests: 2,
+    insideItems: ['Wi-Fi', 'Heating', 'Kitchen'],
+    offerGallery: [`${PLACEHOLDER_URL}?text=Place+5+1`, `${PLACEHOLDER_URL}?text=Place+5+2`, `${PLACEHOLDER_URL}?text=Place+5+3`, `${PLACEHOLDER_URL}?text=Place+5+4`, `${PLACEHOLDER_URL}?text=Place+5+5`, `${PLACEHOLDER_URL}?text=Place+5+6`],
+    host: hosts[0],
+    reviews: reviews.slice(0, 3),
+    nearPlaces: []
+  },
 ];
-
-offers[0].nearPlaces = [offers[1], offers[2], offers[3]];
-offers[1].nearPlaces = [offers[0], offers[2], offers[3]];
-offers[2].nearPlaces = [offers[1], offers[0], offers[3]];
-offers[3].nearPlaces = [offers[1], offers[2], offers[0]];
 
 export default offers;

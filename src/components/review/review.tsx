@@ -26,7 +26,7 @@ function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
         <p className="reviews__text">
           {review.text}
         </p>
-        <time className="reviews__time" dateTime={review.date.toISOString().slice(0, 10)}>{`${monthMap[Number(review.date.toISOString().slice(6, 7))]} ${review.date.toISOString().slice(0, 4)}`}</time>
+        <time className="reviews__time" dateTime={review.date.slice(0, 10)}>{`${monthMap[Number(review.date.slice(6, 7))]} ${review.date.slice(0, 4)}`}</time>
       </div>
     </li>
   );

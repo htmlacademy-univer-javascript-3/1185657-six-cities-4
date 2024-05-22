@@ -10,7 +10,7 @@ const reviews: Reviews = [
     },
     rating: 4,
     text: 'Great place! Highly recommended.',
-    date: new Date('2023-02-15'),
+    date: new Date('2023-02-15').toISOString(),
     id: 1,
   },
   {
@@ -20,7 +20,7 @@ const reviews: Reviews = [
     },
     rating: 5,
     text: 'Amazing experience! Will definitely come back.',
-    date: new Date('2023-03-20'),
+    date: new Date('2023-03-20').toISOString(),
     id: 2,
   },
   {
@@ -30,7 +30,7 @@ const reviews: Reviews = [
     },
     rating: 3.5,
     text: 'Decent place. Could be better.',
-    date: new Date('2023-04-10'),
+    date: new Date('2023-04-10').toISOString(),
     id: 3,
   },
   {
@@ -40,7 +40,7 @@ const reviews: Reviews = [
     },
     rating: 4.5,
     text: 'Fantastic location! Enjoyed every moment of my stay.',
-    date: new Date('2023-05-05'),
+    date: new Date('2023-05-05').toISOString(),
     id: 4,
   },
   {
@@ -50,7 +50,7 @@ const reviews: Reviews = [
     },
     rating: 4,
     text: 'Nice place, but a bit noisy during the night.',
-    date: new Date('2023-06-20'),
+    date: new Date('2023-06-20').toISOString(),
     id: 5,
   },
   {
@@ -60,7 +60,7 @@ const reviews: Reviews = [
     },
     rating: 3,
     text: 'Average experience. Expected more for the price.',
-    date: new Date('2023-07-10'),
+    date: new Date('2023-07-10').toISOString(),
     id: 6,
   },
   {
@@ -70,7 +70,7 @@ const reviews: Reviews = [
     },
     rating: 4.5,
     text: 'Wonderful stay! Will definitely recommend to friends.',
-    date: new Date('2023-08-15'),
+    date: new Date('2023-08-15').toISOString(),
     id: 7,
   },
   {
@@ -80,7 +80,7 @@ const reviews: Reviews = [
     },
     rating: 5,
     text: 'Absolutely perfect! Couldn\'t ask for more.',
-    date: new Date('2023-09-30'),
+    date: new Date('2023-09-30').toISOString(),
     id: 8,
   },
 ];
