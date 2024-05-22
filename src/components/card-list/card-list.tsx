@@ -1,20 +1,30 @@
 import { useState } from 'react';
-import { Offers, CardType } from '../../types/types';
+import { Offers, CardType, Offer } from '../../types/types';
 import CardComponent from '../card/card';
 import { ACTIVE_CARD } from '../../const';
-
 
 type CardListComponentProps = {
   offers: Offers;
   cardsType: CardType;
+  onCardHover?: (offer: Offer | undefined) => void;
 };
 
-function CardListComponent({offers, cardsType}: CardListComponentProps): JSX.Element {
+function CardListComponent({ offers, cardsType, onCardHover }: CardListComponentProps): JSX.Element {
   const cardsArray = Array.from({ length: offers.length }, (_, index) => index);
   const [, setActiveCard] = useState(ACTIVE_CARD);
 
-  const handleCardMouseEnter = (id: number) => {
-    setActiveCard(id);
+  const handleCardMouseEnter = (offer: Offer) => {
+    setActiveCard(offer.id);
+    if (onCardHover) {
+      onCardHover(offer);
+    }
+  };
+
+  const handleCardMouseLeave = () => {
+    setActiveCard(0);
+    if (onCardHover) {
+      onCardHover(undefined);
+    }
   };
 
   const handleDivClass = (type: CardType) => {
@@ -28,6 +38,7 @@ function CardListComponent({offers, cardsType}: CardListComponentProps): JSX.Ele
       return 'favorites__places';
     }
   };
+
   const getCards = (type: CardType) => (
     <div className={handleDivClass(type)}>
       {cardsArray.map((index) => (
@@ -35,11 +46,12 @@ function CardListComponent({offers, cardsType}: CardListComponentProps): JSX.Ele
           key={index}
           offer={offers[index]}
           cardType={type}
-          onMouseEnter={() => handleCardMouseEnter(offers[index].id)}
-          onMouseLeave={() => handleCardMouseEnter(0)}
+          onMouseEnter={() => handleCardMouseEnter(offers[index])}
+          onMouseLeave={handleCardMouseLeave}
         />
       ))}
-    </div>);
+    </div>
+  );
 
   const handleListType = (type: CardType) => {
     if (type === CardType.Favorite) {
