@@ -1,21 +1,18 @@
 import { AppRoute } from '../../const';
-import { CardType, Offers } from '../../types/types';
+import { CardType } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
-import CardList from '../../components/card-list/card-list';
-import ReviewForm from '../../components/review-form/review-form';
-import ReviewList from '../../components/review-list/review-list';
-import Map from '../../components/map/map';
-
-type OfferScreenProps = {
-  offers: Offers;
-};
+import { useSelector } from 'react-redux';
+import { selectOffers } from '../../store/selectors';
+import CardListComponent from '../../components/card-list/card-list';
+import ReviewFormComponent from '../../components/review-form/review-form';
+import ReviewListComponent from '../../components/review-list/review-list';
+import MapComponent from '../../components/map/map';
 
 
-function OfferScreen({offers}: OfferScreenProps): JSX.Element {
+function OfferScreen(): JSX.Element {
   const { id } = useParams();
-
+  const offers = useSelector(selectOffers);
   const numericId = Number(id);
-
   const selectedOffer = offers.find((offer) => offer.id === numericId);
 
   return (
@@ -136,17 +133,17 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
                 </div>
                 <section className="offer__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{selectedOffer.reviews.length}</span></h2>
-                  <ReviewList reviews={selectedOffer.reviews} />
-                  <ReviewForm />
+                  <ReviewListComponent reviews={selectedOffer.reviews} />
+                  <ReviewFormComponent />
                 </section>
               </div>
             </div>
-            <section className="offer__map map"><Map city={selectedOffer.city} points={selectedOffer.nearPlaces} selectedPoint={undefined}/></section>
+            <section className="offer__map map"><MapComponent city={selectedOffer.city} points={selectedOffer.nearPlaces.concat(selectedOffer)} selectedPoint={selectedOffer}/></section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <CardList offers={selectedOffer.nearPlaces} cardsType={CardType.Near} />
+              <CardListComponent offers={selectedOffer.nearPlaces} cardsType={CardType.Near} />
             </section>
           </div>
         </main>

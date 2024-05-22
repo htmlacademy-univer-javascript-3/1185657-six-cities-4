@@ -1,11 +1,11 @@
 import { monthMap } from '../../const';
 import { Review } from '../../types/types';
 
-type CardProps = {
+type ReviewComponentProps = {
   review: Review;
 }
 
-function ReviewItem({review}: CardProps): JSX.Element {
+function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
   return (
     <li key={review.id} className="reviews__item">
       <div className="reviews__user user">
@@ -26,10 +26,10 @@ function ReviewItem({review}: CardProps): JSX.Element {
         <p className="reviews__text">
           {review.text}
         </p>
-        <time className="reviews__time" dateTime={review.date.toISOString().slice(0, 10)}>{`${monthMap[Number(review.date.toISOString().slice(6, 7))]} ${review.date.toISOString().slice(0, 4)}`}</time>
+        <time className="reviews__time" dateTime={review.date.slice(0, 10)}>{`${monthMap[Number(review.date.slice(6, 7))]} ${review.date.slice(0, 4)}`}</time>
       </div>
     </li>
   );
 }
 
-export default ReviewItem;
+export default ReviewComponent;

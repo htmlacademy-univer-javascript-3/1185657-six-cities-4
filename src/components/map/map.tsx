@@ -5,8 +5,7 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/use-map';
 
-
-type MapProps = {
+type MapComponentProps = {
   city: City;
   points: Offers;
   selectedPoint: Offer | undefined;
@@ -24,7 +23,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): JSX.Element {
+function MapComponent(props: MapComponentProps): JSX.Element {
   const {city, points, selectedPoint} = props;
 
   const mapRef = useRef(null);
@@ -32,6 +31,13 @@ function Map(props: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      // Центрируем карту на выбранном месте, если оно задано
+      if (selectedPoint) {
+        map.setView([selectedPoint.coordinates.lat, selectedPoint.coordinates.lng], city.zoom);
+      } else {
+        map.setView([city.lat, city.lng], city.zoom);
+      }
+
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
@@ -41,7 +47,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.name === selectedPoint.name
+            selectedPoint !== undefined && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -52,9 +58,9 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, city, points, selectedPoint]); // Добавляем selectedPoint в зависимости
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
 
-export default Map;
+export default MapComponent;

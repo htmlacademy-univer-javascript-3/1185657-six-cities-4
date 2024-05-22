@@ -5,7 +5,7 @@ export type Review = {
   };
   rating: number;
   text: string;
-  date: Date;
+  date: string;
   id: number;
 }
 

@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { Offer, CardType } from '../../types/types';
 
 
-type CardProps = {
+type CardComponentProps = {
   offer: Offer;
   cardType: CardType;
   onMouseEnter: () => void;
@@ -10,7 +10,7 @@ type CardProps = {
 };
 
 
-function Card({offer, cardType, onMouseEnter, onMouseLeave}: CardProps): JSX.Element {
+function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardComponentProps): JSX.Element {
   const articleHandle = (type: CardType) => {
     if (type === CardType.Near) {
       return 'near-places__card';
@@ -82,4 +82,4 @@ function Card({offer, cardType, onMouseEnter, onMouseLeave}: CardProps): JSX.Ele
   );
 }
 
-export default Card;
+export default CardComponent;

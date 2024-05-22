@@ -1,13 +1,12 @@
 import { AppRoute } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
-import { CardType, Offers } from '../../types/types';
-import CardList from '../../components/card-list/card-list';
+import { CardType } from '../../types/types';
+import CardListComponent from '../../components/card-list/card-list';
+import { useSelector } from 'react-redux';
+import { selectOffers } from '../../store/selectors';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-};
-
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen(): JSX.Element {
+  const offers = useSelector(selectOffers);
   // Функция для фильтрации отелей по наличию закладок
   const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city.title === city && offer.isBookmarked);
 
@@ -50,7 +49,7 @@ function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {cities.map((city) => (
-                <CardList key={city} cardsType={CardType.Favorite} offers={filterBookmarkedOffers(city)} />
+                <CardListComponent key={city} cardsType={CardType.Favorite} offers={filterBookmarkedOffers(city)} />
               ))}
             </ul>
           </section>

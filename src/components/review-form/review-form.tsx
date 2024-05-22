@@ -1,7 +1,7 @@
 import { REVIEW_FORM } from '../../const';
 import { useState } from 'react';
 
-function ReviewForm(): JSX.Element {
+function ReviewFormComponent(): JSX.Element {
   const [formData, setFormData] = useState({
     rating: REVIEW_FORM.rating,
     review: REVIEW_FORM.review
@@ -69,4 +69,4 @@ function ReviewForm(): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export default ReviewFormComponent;
