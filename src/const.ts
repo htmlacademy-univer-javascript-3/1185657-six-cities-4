@@ -29,7 +29,7 @@ export const monthMap: { [key: number]: string } = {
   12: 'December'
 };
 
-export const ACTIVE_CARD = 0;
+export const ACTIVE_CARD = null;
 
 export const REVIEW_FORM = {
   rating: 0,
@@ -46,10 +46,19 @@ export const URL_MARKER_HOWERED =
   '/img/pin-active.svg';
 
 export const CITIES: City[] = [
-  { title: 'Paris', lat: 48.8566, lng: 2.3522, zoom: 12 },
-  { title: 'Cologne', lat: 50.9375, lng: 6.9603, zoom: 12 },
-  { title: 'Brussels', lat: 50.8503, lng: 4.3517, zoom: 12 },
-  { title: 'Amsterdam', lat: 52.3676, lng: 4.9041, zoom: 12 },
-  { title: 'Hamburg', lat: 53.5511, lng: 9.9937, zoom: 12 },
-  { title: 'Dusseldorf', lat: 51.2277, lng: 6.7735, zoom: 12 },
+  { name: 'Paris', location: {latitude: 48.8566, longitude: 2.3522, zoom: 12 }},
+  { name: 'Cologne', location: {latitude: 50.9375, longitude: 6.9603, zoom: 12 }},
+  { name: 'Brussels', location: {latitude: 50.8503, longitude: 4.3517, zoom: 12 }},
+  { name: 'Amsterdam', location: {latitude: 52.3676, longitude: 4.9041, zoom: 12 }},
+  { name: 'Hamburg', location: {latitude: 53.5511, longitude: 9.9937, zoom: 12 }},
+  { name: 'Dusseldorf', location: {latitude: 51.2277, longitude: 6.7735, zoom: 12 }},
 ];
+
+export enum APIRoute {
+  Offers = '/offers',
+  Review = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+  Nearby = '/nearby',
+  Favorite = '/favorite',
+}

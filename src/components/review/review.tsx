@@ -10,7 +10,7 @@ function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
     <li key={review.id} className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={review.user.avatarSrc} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
           {review.user.name}
@@ -24,7 +24,7 @@ function ReviewComponent({review}: ReviewComponentProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">
-          {review.text}
+          {review.comment}
         </p>
         <time className="reviews__time" dateTime={review.date.slice(0, 10)}>{`${monthMap[Number(review.date.slice(6, 7))]} ${review.date.slice(0, 4)}`}</time>
       </div>

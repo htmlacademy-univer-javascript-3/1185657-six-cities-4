@@ -1,28 +1,46 @@
 import { AppRoute } from '../../const';
 import { CardType, Offer } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectOffers } from '../../store/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatus } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
 import MapComponent from '../../components/map/map';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../store/action';
+import { AppDispatch } from '../../store/index';
 
 function OfferScreen(): JSX.Element {
-  const { id } = useParams();
-  const offers = useSelector(selectOffers);
-  const numericId = Number(id);
-  const selectedOffer = offers.find((offer) => offer.id === numericId);
+  const dispatch: AppDispatch = useDispatch();
+
+  const offerId = useParams().id ?? '';
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchOffer(offerId));
+      dispatch(fetchReviews(offerId));
+      dispatch(fetchNearbyOffers(offerId));
+    }
+  }, [dispatch, offerId]);
+
+  const currentOffer = useSelector(selectCurrentOffer);
+  const reviews = useSelector(selectReviews);
+  const nearPlaces = useSelector(selectNearbyOffers);
+  const cntFav = useSelector(selectOffers).filter((offer) => offer.isFavorite).length;
+  const isLoading = useSelector(selectLoadingStatus);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
 
-  if (!selectedOffer) {
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!currentOffer) {
     return <Navigate to={AppRoute.Error} />;
   }
 
-  const nearPlaces = selectedOffer.nearPlaces;
-  const points = nearPlaces.concat(selectedOffer);
 
   return (
     <div className="page">
@@ -40,7 +58,7 @@ function OfferScreen(): JSX.Element {
                   <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
+                    <span className="header__favorite-count">{cntFav}</span>
                   </NavLink>
                 </li>
                 <li className="header__nav-item">
@@ -58,7 +76,7 @@ function OfferScreen(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {selectedOffer.offerGallery.map((item) => (
+              {currentOffer.images.map((item) => (
                 <div key={item} className="offer__image-wrapper">
                   <img className="offer__image" src={item} alt="Photo studio"/>
                 </div>
@@ -67,16 +85,16 @@ function OfferScreen(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {selectedOffer.isPremium && (
+              {currentOffer.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {selectedOffer.name}
+                  {currentOffer.title}
                 </h1>
-                <button className={`offer__bookmark-button button ${selectedOffer.isBookmarked ? 'offer__bookmark-button--active' : ''}`} type="button">
+                <button className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -85,30 +103,30 @@ function OfferScreen(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${selectedOffer.rating * 20}%`}}></span>
+                  <span style={{width: `${currentOffer.rating * 20}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{selectedOffer.rating}</span>
+                <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {selectedOffer.type}
+                  {currentOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {selectedOffer.bedrooms} Bedrooms
+                  {currentOffer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                Max {selectedOffer.maxGuests} adults
+                Max {currentOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{selectedOffer.price}</b>
+                <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {selectedOffer.insideItems.map((item) => (
+                  {currentOffer.goods.map((item) => (
                     <li key={item} className="offer__inside-item">
                       {item}
                     </li>
@@ -118,33 +136,31 @@ function OfferScreen(): JSX.Element {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className={`offer__avatar-wrapper ${selectedOffer.host.status === 'Pro' ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                    <img className="offer__avatar user__avatar" src={selectedOffer.host.avatarSrc} width="74" height="74" alt="Host avatar"/>
+                  <div className={`offer__avatar-wrapper ${currentOffer.host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                    <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="offer__user-name">
-                    {selectedOffer.host.name}
+                    {currentOffer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {selectedOffer.host.status}
+                    {currentOffer.host.isPro && 'Pro'}
                   </span>
                 </div>
                 <div className="offer__description">
-                  {selectedOffer.host.description.map((item) => (
-                    <p key={item} className="offer__text">
-                      {item}
-                    </p>
-                  ))}
+                  <p className="offer__text">
+                    {currentOffer.description}
+                  </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{selectedOffer.reviews.length}</span></h2>
-                <ReviewListComponent reviews={selectedOffer.reviews} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewListComponent reviews={reviews} />
                 <ReviewFormComponent />
               </section>
             </div>
           </div>
           <section className="offer__map map">
-            <MapComponent city={selectedOffer.city} points={points} selectedPoint={selectedOffer} hoveredPoint={hoveredOffer} />
+            <MapComponent city={currentOffer.city} points={nearPlaces} selectedPoint={currentOffer} hoveredPoint={hoveredOffer} />
           </section>
         </section>
         <div className="container">

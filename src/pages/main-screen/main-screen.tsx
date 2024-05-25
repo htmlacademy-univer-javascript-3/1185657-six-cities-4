@@ -23,7 +23,7 @@ function MainScreen(): JSX.Element {
   };
 
   const handleSortChange = (sortType: string) => {
-    let sorted = [...offers.filter((offer) => offer.city.title === city.title)];
+    let sorted = [...offers.filter((offer) => offer.city.name === city.name)];
     switch (sortType) {
       case 'Price: low to high':
         sorted.sort((a, b) => a.price - b.price);
@@ -36,14 +36,14 @@ function MainScreen(): JSX.Element {
         break;
       default:
         // 'Popular' or any other case, reset to original order
-        sorted = [...offers.filter((offer) => offer.city.title === city.title)];
+        sorted = [...offers.filter((offer) => offer.city.name === city.name)];
         break;
     }
     setSortedOffers(sorted);
   };
 
   useEffect(() => {
-    setSortedOffers(offers.filter((offer) => offer.city.title === city.title));
+    setSortedOffers(offers.filter((offer) => offer.city.name === city.name));
   }, [city, offers]);
 
   return (
@@ -62,7 +62,7 @@ function MainScreen(): JSX.Element {
                   <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
+                    <span className="header__favorite-count">{offers.filter((offer) => offer.isFavorite).length}</span>
                   </NavLink>
                 </li>
                 <li className="header__nav-item">
@@ -86,7 +86,7 @@ function MainScreen(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {sortedOffers.length} places to stay in {city.title}
+                {sortedOffers.length} places to stay in {city.name}
               </b>
               <SortOptions onSortChange={handleSortChange} />
               <CardListComponent offers={sortedOffers} cardsType={CardType.City} onCardHover={setHoveredOffer} />

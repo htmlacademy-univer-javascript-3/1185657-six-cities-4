@@ -11,7 +11,7 @@ type CardListComponentProps = {
 
 function CardListComponent({ offers, cardsType, onCardHover }: CardListComponentProps): JSX.Element {
   const cardsArray = Array.from({ length: offers.length }, (_, index) => index);
-  const [, setActiveCard] = useState(ACTIVE_CARD);
+  const [, setActiveCard] = useState < string | null>(ACTIVE_CARD);
 
   const handleCardMouseEnter = (offer: Offer) => {
     setActiveCard(offer.id);
@@ -21,7 +21,7 @@ function CardListComponent({ offers, cardsType, onCardHover }: CardListComponent
   };
 
   const handleCardMouseLeave = () => {
-    setActiveCard(0);
+    setActiveCard(null);
     if (onCardHover) {
       onCardHover(undefined);
     }
@@ -60,7 +60,7 @@ function CardListComponent({ offers, cardsType, onCardHover }: CardListComponent
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{offers[0].city.title}</span>
+                <span>{offers[0].city.name}</span>
               </a>
             </div>
           </div>
