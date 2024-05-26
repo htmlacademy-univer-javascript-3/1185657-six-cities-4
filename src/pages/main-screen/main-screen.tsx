@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 import { City, Offer, CardType } from '../../types/types';
 import { setCity } from '../../store/action';
-import { selectCity, selectOffers } from '../../store/selectors';
+import { selectCity, selectLoadingStatusOffers, selectOffers } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import MapComponent from '../../components/map/map';
 import CityList from '../../components/city-list/city-list';
@@ -17,13 +17,14 @@ function MainScreen(): JSX.Element {
   const offers = useSelector(selectOffers);
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
+  const isLoadingOffers = useSelector(selectLoadingStatusOffers);
 
   const handleCityChange = (newCity: City) => {
     dispatch(setCity(newCity));
   };
 
   const handleSortChange = (sortType: string) => {
-    let sorted = [...offers.filter((offer) => offer.city.title === city.title)];
+    let sorted = [...offers.filter((offer) => offer.city.name === city.name)];
     switch (sortType) {
       case 'Price: low to high':
         sorted.sort((a, b) => a.price - b.price);
@@ -36,14 +37,14 @@ function MainScreen(): JSX.Element {
         break;
       default:
         // 'Popular' or any other case, reset to original order
-        sorted = [...offers.filter((offer) => offer.city.title === city.title)];
+        sorted = [...offers.filter((offer) => offer.city.name === city.name)];
         break;
     }
     setSortedOffers(sorted);
   };
 
   useEffect(() => {
-    setSortedOffers(offers.filter((offer) => offer.city.title === city.title));
+    setSortedOffers(offers.filter((offer) => offer.city.name === city.name));
   }, [city, offers]);
 
   return (
@@ -62,7 +63,7 @@ function MainScreen(): JSX.Element {
                   <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{offers.filter((offer) => offer.isBookmarked).length}</span>
+                    <span className="header__favorite-count">{offers.filter((offer) => offer.isFavorite).length}</span>
                   </NavLink>
                 </li>
                 <li className="header__nav-item">
@@ -76,30 +77,50 @@ function MainScreen(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${sortedOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CityList cities={CITIES} currentCity={city} onCityChange={handleCityChange} />
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {sortedOffers.length} places to stay in {city.title}
-              </b>
-              <SortOptions onSortChange={handleSortChange} />
-              <CardListComponent offers={sortedOffers} cardsType={CardType.City} onCardHover={setHoveredOffer} />
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                {sortedOffers.length > 0 && (
-                  <MapComponent city={city} points={sortedOffers} selectedPoint={undefined} hoveredPoint={hoveredOffer} />
-                )}
+        {isLoadingOffers && (
+          <div>Loading...</div>
+        )}
+
+        {!isLoadingOffers && sortedOffers.length > 0 && (
+          <div className="cities">
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">
+                  {sortedOffers.length} places to stay in {city.name}
+                </b>
+                <SortOptions onSortChange={handleSortChange} />
+                <CardListComponent offers={sortedOffers} cardsType={CardType.City} onCardHover={setHoveredOffer} />
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <MapComponent city={city} points={sortedOffers} selectedPoint={undefined} hoveredPoint={hoveredOffer} />
+                </section>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {!isLoadingOffers && sortedOffers.length === 0 && (
+          <div className="cities">
+            <div className="cities__places-container cities__places-container--empty container">
+              <section className="cities__no-places">
+                <div className="cities__status-wrapper tabs__content">
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">We could not find any property available at the moment in {city.name}</p>
+                </div>
+              </section>
+              <div className="cities__right-section"></div>
+            </div>
+          </div>
+        )}
+
+
       </main>
     </div>
   );

@@ -13,16 +13,16 @@ function CityList({ cities, currentCity, onCityChange }: CityListProps): JSX.Ele
         {cities.map((city) => (
           <li
             className="locations__item"
-            key={city.title}
+            key={city.name}
             onClick={() => onCityChange(city)}
           >
             <a
               className={`locations__item-link tabs__item ${
-                currentCity.title === city.title ? 'tabs__item--active' : ''
+                currentCity.name === city.name ? 'tabs__item--active' : ''
               }`}
               href="#"
             >
-              <span>{city.title}</span>
+              <span>{city.name}</span>
             </a>
           </li>
         ))}

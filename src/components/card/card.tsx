@@ -11,6 +11,8 @@ type CardComponentProps = {
 
 
 function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardComponentProps): JSX.Element {
+  const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
   const articleHandle = (type: CardType) => {
     if (type === CardType.Near) {
       return 'near-places__card';
@@ -51,7 +53,7 @@ function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardCompon
       )}
       <div className={`${wrapperHandle(cardType)} place-card__image-wrapper`}>
         <Link to={{ pathname: `/offer/${offer.id}` }}>
-          <img className="place-card__image" src={offer.cardImage} width={imageSizeHandle(cardType)[0]} height={imageSizeHandle(cardType)[1]} alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width={imageSizeHandle(cardType)[0]} height={imageSizeHandle(cardType)[1]} alt="Place image"/>
         </Link>
       </div>
       <div className={`${cardType === CardType.Favorite && 'favorites__card-info'} place-card__info`}>
@@ -60,7 +62,7 @@ function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardCompon
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${offer.isBookmarked && 'place-card__bookmark-button--active'}`}type="button">
+          <button className={`place-card__bookmark-button button ${offer.isFavorite && 'place-card__bookmark-button--active'}`}type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -74,9 +76,9 @@ function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardCompon
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={{ pathname: `/offer/${offer.id}` }}>{offer.name}</Link>
+          <Link to={{ pathname: `/offer/${offer.id}` }}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );
