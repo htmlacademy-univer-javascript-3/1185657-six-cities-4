@@ -12,3 +12,5 @@ export const selectLoadingStatusReviews = (state: RootState): boolean => state.i
 export const selectLoadingStatusNear = (state: RootState): boolean => state.isLoadingNear;
 export const selectAuthorizationStatus = (state: RootState) => state.authorizationStatus;
 export const selectUserData = (state: RootState) => state.userData;
+export const selectFavorites = (state: RootState): Offers => state.favorites;
+export const selectLoadingStatusFavorites = (state: RootState): boolean => state.isLoadingFavorites;

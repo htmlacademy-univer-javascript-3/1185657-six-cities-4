@@ -38,5 +38,10 @@ export const createAPI = (): AxiosInstance => {
     }
   );
 
+  const token = localStorage.getItem('token');
+  if (token) {
+    api.defaults.headers.common['X-Token'] = token;
+  }
+
   return api;
 };

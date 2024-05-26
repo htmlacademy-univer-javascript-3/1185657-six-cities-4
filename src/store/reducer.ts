@@ -1,6 +1,6 @@
 // src/store/reducer.ts
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login } from './action';
+import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login, logout, setFavorites, fetchFavorites, postComment } from './action';
 import { City, Offer, Reviews, WideOffer, UserData } from '../types/types';
 import { CITIES, AuthorizationStatus } from '../const';
 
@@ -14,8 +14,10 @@ type StateType = {
   isLoadingOffer: boolean;
   isLoadingReviews: boolean;
   isLoadingNear: boolean;
+  isLoadingFavorites: boolean;
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
+  favorites: Offer[];
 };
 
 const initialState: StateType = {
@@ -28,8 +30,10 @@ const initialState: StateType = {
   isLoadingOffer: true,
   isLoadingReviews: true,
   isLoadingNear: true,
+  isLoadingFavorites: true,
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
+  favorites: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -106,6 +110,32 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(login.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(logout.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userData = null;
+    })
+    .addCase(setFavorites, (state, action) => {
+      state.favorites = action.payload;
+      state.isLoadingFavorites = false;
+    })
+    .addCase(fetchFavorites.pending, (state) => {
+      state.isLoadingFavorites = true;
+    })
+    .addCase(fetchFavorites.fulfilled, (state) => {
+      state.isLoadingFavorites = false;
+    })
+    .addCase(fetchFavorites.rejected, (state) => {
+      state.isLoadingFavorites = false;
+    })
+    .addCase(postComment.pending, (state) => {
+      state.isLoadingReviews = true;
+    })
+    .addCase(postComment.fulfilled, (state) => {
+      state.isLoadingReviews = false;
+    })
+    .addCase(postComment.rejected, (state) => {
+      state.isLoadingReviews = false;
     });
 });
 
