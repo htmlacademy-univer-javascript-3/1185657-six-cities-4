@@ -8,7 +8,7 @@ import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
 import MapComponent from '../../components/map/map';
 import { useState, useEffect } from 'react';
-import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../store/action';
+import { fetchOffer, fetchReviews, fetchNearbyOffers, logout } from '../../store/action';
 import { AppDispatch } from '../../store/index';
 
 function OfferScreen(): JSX.Element {
@@ -35,6 +35,11 @@ function OfferScreen(): JSX.Element {
   const userData = useSelector(selectUserData);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
+
+  const handleLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
 
 
   if (isLoadingOffer) {
@@ -67,7 +72,7 @@ function OfferScreen(): JSX.Element {
                     </NavLink>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <a className="header__nav-link" href="#" onClick={handleLogoutClick}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>
@@ -174,7 +179,7 @@ function OfferScreen(): JSX.Element {
 
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                   <ReviewListComponent reviews={reviews} />
-                  <ReviewFormComponent />
+                  {authorizationStatus === AuthorizationStatus.Auth && (<ReviewFormComponent />)}
                 </section>)}
             </div>
           </div>

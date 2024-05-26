@@ -1,14 +1,15 @@
 import { FormEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import { login } from '../../store/action';
 import { selectAuthorizationStatus } from '../../store/selectors';
 import { AuthorizationStatus } from '../../const';
-import { store } from '../../store';
+import { AppDispatch } from '../../store';
 import { Navigate } from 'react-router-dom';
 
 function LoginScreen(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +26,7 @@ function LoginScreen(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    store.dispatch(login({ email, password }));
+    dispatch(login({ email, password }));
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {

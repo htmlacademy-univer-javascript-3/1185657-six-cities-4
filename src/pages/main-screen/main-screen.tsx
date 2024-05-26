@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 import { City, Offer, CardType } from '../../types/types';
-import { setCity } from '../../store/action';
+import { setCity, logout } from '../../store/action';
 import { selectCity, selectLoadingStatusOffers, selectOffers, selectAuthorizationStatus, selectUserData } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import MapComponent from '../../components/map/map';
@@ -10,9 +10,10 @@ import CityList from '../../components/city-list/city-list';
 import SortOptions from '../../components/sort-options/sort-options';
 import { CITIES } from '../../const';
 import { useState, useEffect } from 'react';
+import { AppDispatch } from '../../store';
 
 function MainScreen(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const city = useSelector(selectCity);
   const offers = useSelector(selectOffers);
   const [sortedOffers, setSortedOffers] = useState<Offer[]>([]);
@@ -49,6 +50,11 @@ function MainScreen(): JSX.Element {
     setSortedOffers(offers.filter((offer) => offer.city.name === city.name));
   }, [city, offers]);
 
+  const handleLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -70,7 +76,7 @@ function MainScreen(): JSX.Element {
                     </NavLink>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <a className="header__nav-link" href="#" onClick={handleLogoutClick}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>
