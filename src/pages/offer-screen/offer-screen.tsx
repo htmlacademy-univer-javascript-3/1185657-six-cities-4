@@ -179,7 +179,7 @@ function OfferScreen(): JSX.Element {
 
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                   <ReviewListComponent reviews={reviews} />
-                  {authorizationStatus === AuthorizationStatus.Auth && (<ReviewFormComponent />)}
+                  {authorizationStatus === AuthorizationStatus.Auth && (<ReviewFormComponent offerId={offerId} />)}
                 </section>)}
             </div>
           </div>

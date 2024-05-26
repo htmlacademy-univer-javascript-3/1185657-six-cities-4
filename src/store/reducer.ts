@@ -1,6 +1,6 @@
 // src/store/reducer.ts
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login, logout, setFavorites, fetchFavorites } from './action';
+import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login, logout, setFavorites, fetchFavorites, postComment } from './action';
 import { City, Offer, Reviews, WideOffer, UserData } from '../types/types';
 import { CITIES, AuthorizationStatus } from '../const';
 
@@ -127,6 +127,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavorites.rejected, (state) => {
       state.isLoadingFavorites = false;
+    })
+    .addCase(postComment.pending, (state) => {
+      state.isLoadingReviews = true;
+    })
+    .addCase(postComment.fulfilled, (state) => {
+      state.isLoadingReviews = false;
+    })
+    .addCase(postComment.rejected, (state) => {
+      state.isLoadingReviews = false;
     });
 });
 
