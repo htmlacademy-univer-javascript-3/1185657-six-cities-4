@@ -3,22 +3,18 @@ import { Link, NavLink } from 'react-router-dom';
 import { CardType } from '../../types/types';
 import CardListComponent from '../../components/card-list/card-list';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthorizationStatus, selectFavorites, selectOffers, selectUserData } from '../../store/selectors';
+import { selectAuthorizationStatus, selectFavorites, selectUserData } from '../../store/selectors';
 import { AppDispatch } from '../../store';
 import { logout } from '../../store/action';
 
 function FavoritesScreen(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
-  const offers = useSelector(selectOffers);
-  // Функция для фильтрации отелей по наличию закладок
-  const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city.name === city && offer.isFavorite);
-  const cntFav = offers.filter((offer) => offer.isFavorite).length;
 
-  // Получение уникальных городов из списка отелей
-  const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const userData = useSelector(selectUserData);
   const favorites = useSelector(selectFavorites);
+  const cities = Array.from(new Set(favorites.map((offer) => offer.city.name)));
+  const filterBookmarkedOffers = (city: string) => favorites.filter((offer) => offer.city.name === city);
 
   const handleLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     evt.preventDefault();
@@ -65,7 +61,7 @@ function FavoritesScreen(): JSX.Element {
           </div>
         </div>
       </header>
-      {cntFav > 0 ? (
+      {favorites.length > 0 ? (
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">

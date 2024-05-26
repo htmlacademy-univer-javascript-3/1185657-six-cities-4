@@ -1,6 +1,6 @@
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { CardType, Offer } from '../../types/types';
-import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
+import { useParams, Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear, selectAuthorizationStatus, selectUserData, selectFavorites } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
@@ -8,10 +8,11 @@ import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
 import MapComponent from '../../components/map/map';
 import { useState, useEffect } from 'react';
-import { fetchOffer, fetchReviews, fetchNearbyOffers, logout } from '../../store/action';
+import { fetchOffer, fetchReviews, fetchNearbyOffers, logout, toggleFavoriteStatus } from '../../store/action';
 import { AppDispatch } from '../../store/index';
 
 function OfferScreen(): JSX.Element {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
 
   const offerId = useParams().id ?? '';
@@ -33,6 +34,7 @@ function OfferScreen(): JSX.Element {
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const userData = useSelector(selectUserData);
   const favorites = useSelector(selectFavorites);
+  const isFavorite = favorites.some((favorite) => favorite.id === currentOffer?.id);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
 
@@ -41,7 +43,6 @@ function OfferScreen(): JSX.Element {
     dispatch(logout());
   };
 
-
   if (isLoadingOffer) {
     return <div>Loading...</div>;
   }
@@ -49,6 +50,14 @@ function OfferScreen(): JSX.Element {
   if (!currentOffer) {
     return <Navigate to={AppRoute.Error} />;
   }
+  const handleFavoriteClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
+    dispatch(toggleFavoriteStatus({ offerId: currentOffer.id, status: isFavorite ? 0 : 1 }));
+  };
 
 
   return (
@@ -114,7 +123,11 @@ function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   {currentOffer.title}
                 </h1>
-                <button className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button">
+                <button
+                  className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`}
+                  type="button"
+                  onClick={handleFavoriteClick}
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

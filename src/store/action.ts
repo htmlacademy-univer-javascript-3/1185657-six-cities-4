@@ -1,7 +1,7 @@
 // src/store/action.ts
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { City, Offers, Reviews, WideOffer, UserData, Review } from '../types/types';
+import { City, Offers, Reviews, WideOffer, UserData, Review, Offer } from '../types/types';
 import { APIRoute, AuthorizationStatus } from '../const';
 import { AppDispatch, RootState } from './index';
 
@@ -144,4 +144,17 @@ export const postComment = createAsyncThunk<
   const { data } = await api.post<Review>(`${APIRoute.Review}/${offerId}`, { comment, rating });
   await dispatch(fetchReviews(offerId)); // Fetch all reviews to update the list
   return data; // Return the newly posted review
+});
+export const toggleFavoriteStatus = createAsyncThunk<
+  Offer,
+  { offerId: string; status: number },
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+>('toggleFavoriteStatus', async ({ offerId, status }, { dispatch, extra: api }) => {
+  const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+  await dispatch(fetchFavorites()); // обновить список избранных
+  return data;
 });
