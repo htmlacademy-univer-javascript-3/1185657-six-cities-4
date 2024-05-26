@@ -8,9 +8,13 @@ type ReviewListComponentProps = {
 function ReviewListComponent({reviews}: ReviewListComponentProps): JSX.Element {
   return (
     <ul className="reviews__list">
-      {reviews.map((item) => (
-        <ReviewComponent key={item.id} review={item} />
-      ))}
+      {reviews
+        .slice()
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Сортировка по дате
+        .slice(0, 10) // Выбор первых 10 элементов
+        .map((item) => (
+          <ReviewComponent key={item.id} review={item} />
+        ))}
     </ul>
   );
 }

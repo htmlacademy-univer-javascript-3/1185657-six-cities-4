@@ -2,7 +2,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { CardType, Offer } from '../../types/types';
 import { useParams, Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear, selectAuthorizationStatus, selectUserData, selectFavorites } from '../../store/selectors';
+import { selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectAuthorizationStatus, selectUserData, selectFavorites } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
@@ -29,8 +29,6 @@ function OfferScreen(): JSX.Element {
   const reviews = useSelector(selectReviews);
   const nearPlaces = useSelector(selectNearbyOffers);
   const isLoadingOffer = useSelector(selectLoadingStatusOffer);
-  const isLoadingReviews = useSelector(selectLoadingStatusReviews);
-  const isLoadingNear = useSelector(selectLoadingStatusNear);
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const userData = useSelector(selectUserData);
   const favorites = useSelector(selectFavorites);
@@ -105,7 +103,7 @@ function OfferScreen(): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {currentOffer.images.map((item) => (
+              {currentOffer.images.slice(0, 6).map((item) => (
                 <div key={item} className="offer__image-wrapper">
                   <img className="offer__image" src={item} alt="Photo studio"/>
                 </div>
@@ -185,15 +183,13 @@ function OfferScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {isLoadingReviews ? (
-                <div>Loading Reviews...</div>
-              ) : (
-                <section className="offer__reviews reviews">
 
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                  <ReviewListComponent reviews={reviews} />
-                  {authorizationStatus === AuthorizationStatus.Auth && (<ReviewFormComponent offerId={offerId} />)}
-                </section>)}
+              <section className="offer__reviews reviews">
+
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewListComponent reviews={reviews} />
+                {authorizationStatus === AuthorizationStatus.Auth && (<ReviewFormComponent offerId={offerId} />)}
+              </section>
             </div>
           </div>
           <section className="offer__map map">
@@ -201,12 +197,12 @@ function OfferScreen(): JSX.Element {
           </section>
         </section>
         <div className="container">
-          {isLoadingNear ? (
-            <div>Loading Near...</div>) : (
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <CardListComponent offers={nearPlaces.slice(0, 3)} cardsType={CardType.Near} onCardHover={setHoveredOffer} />
-            </section>)}
+
+
+          <section className="near-places places">
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <CardListComponent offers={nearPlaces.slice(0, 3)} cardsType={CardType.Near} onCardHover={setHoveredOffer} />
+          </section>
         </div>
       </main>
     </div>
