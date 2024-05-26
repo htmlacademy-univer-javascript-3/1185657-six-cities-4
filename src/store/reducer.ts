@@ -1,8 +1,8 @@
 // src/store/reducer.ts
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers } from './action';
-import { City, Offer, Reviews, WideOffer } from '../types/types';
-import { CITIES } from '../const';
+import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login } from './action';
+import { City, Offer, Reviews, WideOffer, UserData } from '../types/types';
+import { CITIES, AuthorizationStatus } from '../const';
 
 type StateType = {
   city: City;
@@ -14,6 +14,8 @@ type StateType = {
   isLoadingOffer: boolean;
   isLoadingReviews: boolean;
   isLoadingNear: boolean;
+  authorizationStatus: AuthorizationStatus;
+  userData: UserData | null;
 };
 
 const initialState: StateType = {
@@ -26,6 +28,8 @@ const initialState: StateType = {
   isLoadingOffer: true,
   isLoadingReviews: true,
   isLoadingNear: true,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userData: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -48,6 +52,12 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
       state.isLoadingNear = false;
+    })
+    .addCase(setAuthorizationStatus, (state, action: { payload: AuthorizationStatus }) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action: { payload: UserData}) => {
+      state.userData = action.payload;
     })
     .addCase(fetchOffers.pending, (state) => {
       state.isLoadingOffers = true;
@@ -84,6 +94,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchNearbyOffers.rejected, (state) => {
       state.isLoadingNear = false;
+    })
+    .addCase(checkAuth.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(checkAuth.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(login.fulfilled, (state) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(login.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     });
 });
 

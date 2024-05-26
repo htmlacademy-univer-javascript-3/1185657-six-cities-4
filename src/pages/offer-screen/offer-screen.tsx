@@ -1,8 +1,8 @@
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { CardType, Offer } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear } from '../../store/selectors';
+import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear, selectAuthorizationStatus, selectUserData } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
@@ -31,6 +31,8 @@ function OfferScreen(): JSX.Element {
   const isLoadingOffer = useSelector(selectLoadingStatusOffer);
   const isLoadingReviews = useSelector(selectLoadingStatusReviews);
   const isLoadingNear = useSelector(selectLoadingStatusNear);
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const userData = useSelector(selectUserData);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
 
@@ -55,20 +57,31 @@ function OfferScreen(): JSX.Element {
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{cntFav}</span>
-                  </NavLink>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
+              {authorizationStatus === AuthorizationStatus.Auth ? (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper"><img src={userData?.avatarUrl}/></div>
+                      <span className="header__user-name user__name">{userData?.email}</span>
+                      <span className="header__favorite-count">{cntFav}</span>
+                    </NavLink>
+                  </li>
+                  <li className="header__nav-item">
+                    <a className="header__nav-link" href="#">
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                </ul>) : (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Login}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
             </nav>
           </div>
         </div>
