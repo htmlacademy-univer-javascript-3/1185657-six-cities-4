@@ -34,7 +34,7 @@ export const createAPI = (): AxiosInstance => {
         toast.warn(detailMessage.message);
       }
 
-      throw error;
+      return Promise.reject(error); // возвращаем ошибку, чтобы она была обработана в thunk
     }
   );
 

@@ -78,3 +78,11 @@ export type WideOffer = {
   images: string[];
   maxAdults: number;
 }
+export type UserData = {
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
+};
+
