@@ -38,7 +38,7 @@ export const createAPI = (): AxiosInstance => {
     }
   );
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('six-cities-token');
   if (token) {
     api.defaults.headers.common['X-Token'] = token;
   }

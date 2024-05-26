@@ -109,7 +109,7 @@ export const login = createAsyncThunk<
 >('login', async ({ email, password }, { dispatch, extra: api }) => {
   const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
   if (data) {
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('six-cities-token', data.token);
     api.defaults.headers.common['X-Token'] = data.token;
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserData(data));
@@ -126,7 +126,7 @@ export const logout = createAsyncThunk<
   }
 >('logout', async (_arg, { dispatch, extra: api }) => api.delete(APIRoute.Logout)
   .then(() => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('six-cities-token');
     delete api.defaults.headers.common['X-Token'];
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(clearUserData());
