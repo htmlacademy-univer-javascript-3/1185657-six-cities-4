@@ -2,7 +2,7 @@ import { AppRoute } from '../../const';
 import { CardType, Offer } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatus } from '../../store/selectors';
+import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
@@ -28,12 +28,14 @@ function OfferScreen(): JSX.Element {
   const reviews = useSelector(selectReviews);
   const nearPlaces = useSelector(selectNearbyOffers);
   const cntFav = useSelector(selectOffers).filter((offer) => offer.isFavorite).length;
-  const isLoading = useSelector(selectLoadingStatus);
+  const isLoadingOffer = useSelector(selectLoadingStatusOffer);
+  const isLoadingReviews = useSelector(selectLoadingStatusReviews);
+  const isLoadingNear = useSelector(selectLoadingStatusNear);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
 
 
-  if (isLoading) {
+  if (isLoadingOffer) {
     return <div>Loading...</div>;
   }
 
@@ -152,22 +154,28 @@ function OfferScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewListComponent reviews={reviews} />
-                <ReviewFormComponent />
-              </section>
+              {isLoadingReviews ? (
+                <div>Loading Reviews...</div>
+              ) : (
+                <section className="offer__reviews reviews">
+
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                  <ReviewListComponent reviews={reviews} />
+                  <ReviewFormComponent />
+                </section>)}
             </div>
           </div>
           <section className="offer__map map">
-            <MapComponent city={currentOffer.city} points={nearPlaces} selectedPoint={currentOffer} hoveredPoint={hoveredOffer} />
+            <MapComponent city={currentOffer.city} points={nearPlaces.slice(0, 3)} selectedPoint={currentOffer} hoveredPoint={hoveredOffer} />
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardListComponent offers={nearPlaces} cardsType={CardType.Near} onCardHover={setHoveredOffer} />
-          </section>
+          {isLoadingNear ? (
+            <div>Loading Near...</div>) : (
+            <section className="near-places places">
+              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <CardListComponent offers={nearPlaces.slice(0, 3)} cardsType={CardType.Near} onCardHover={setHoveredOffer} />
+            </section>)}
         </div>
       </main>
     </div>

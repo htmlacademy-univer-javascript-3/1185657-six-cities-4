@@ -11,6 +11,8 @@ type CardComponentProps = {
 
 
 function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardComponentProps): JSX.Element {
+  const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
   const articleHandle = (type: CardType) => {
     if (type === CardType.Near) {
       return 'near-places__card';
@@ -76,7 +78,7 @@ function CardComponent({offer, cardType, onMouseEnter, onMouseLeave}: CardCompon
         <h2 className="place-card__name">
           <Link to={{ pathname: `/offer/${offer.id}` }}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );

@@ -1,6 +1,6 @@
 // src/store/reducer.ts
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers } from './action';
+import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers } from './action';
 import { City, Offer, Reviews, WideOffer } from '../types/types';
 import { CITIES } from '../const';
 
@@ -10,7 +10,10 @@ type StateType = {
   currentOffer: WideOffer | null;
   reviews: Reviews;
   nearbyOffers: Offer[];
-  isLoading: boolean;
+  isLoadingOffers: boolean;
+  isLoadingOffer: boolean;
+  isLoadingReviews: boolean;
+  isLoadingNear: boolean;
 };
 
 const initialState: StateType = {
@@ -19,57 +22,68 @@ const initialState: StateType = {
   currentOffer: null,
   reviews: [],
   nearbyOffers: [],
-  isLoading: false,
+  isLoadingOffers: true,
+  isLoadingOffer: true,
+  isLoadingReviews: true,
+  isLoadingNear: true,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setCity, (state, action) => {
       state.city = action.payload;
-      state.isLoading = false;
     })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
-      state.isLoading = false;
+      state.isLoadingOffers = false;
     })
     .addCase(setOffer, (state, action) => {
       state.currentOffer = action.payload;
-      state.isLoading = false;
+      state.isLoadingOffer = false;
     })
     .addCase(setReviews, (state, action) => {
       state.reviews = action.payload;
-      state.isLoading = false;
+      state.isLoadingReviews = false;
     })
     .addCase(setNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
-      state.isLoading = false;
+      state.isLoadingNear = false;
+    })
+    .addCase(fetchOffers.pending, (state) => {
+      state.isLoadingOffers = true;
     })
     .addCase(fetchOffer.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingOffer = true;
     })
     .addCase(fetchReviews.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingReviews = true;
     })
     .addCase(fetchNearbyOffers.pending, (state) => {
-      state.isLoading = true;
+      state.isLoadingNear = true;
+    })
+    .addCase(fetchOffers.fulfilled, (state) => {
+      state.isLoadingOffers = false;
     })
     .addCase(fetchOffer.fulfilled, (state) => {
-      state.isLoading = false;
+      state.isLoadingOffer = false;
     })
     .addCase(fetchReviews.fulfilled, (state) => {
-      state.isLoading = false;
+      state.isLoadingReviews = false;
     })
     .addCase(fetchNearbyOffers.fulfilled, (state) => {
-      state.isLoading = false;
+      state.isLoadingNear = false;
+    })
+    .addCase(fetchOffers.rejected, (state) => {
+      state.isLoadingOffer = false;
     })
     .addCase(fetchOffer.rejected, (state) => {
-      state.isLoading = false;
+      state.isLoadingOffer = false;
     })
     .addCase(fetchReviews.rejected, (state) => {
-      state.isLoading = false;
+      state.isLoadingReviews = false;
     })
     .addCase(fetchNearbyOffers.rejected, (state) => {
-      state.isLoading = false;
+      state.isLoadingNear = false;
     });
 });
 

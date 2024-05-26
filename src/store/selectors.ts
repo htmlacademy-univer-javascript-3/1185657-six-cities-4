@@ -6,4 +6,7 @@ export const selectOffers = (state: RootState) => state.offers;
 export const selectCurrentOffer = (state: RootState): WideOffer | null => state.currentOffer;
 export const selectReviews = (state: RootState): Reviews => state.reviews;
 export const selectNearbyOffers = (state: RootState): Offers => state.nearbyOffers;
-export const selectLoadingStatus = (state: RootState): boolean => state.isLoading;
+export const selectLoadingStatusOffers = (state: RootState): boolean => state.isLoadingOffers;
+export const selectLoadingStatusOffer = (state: RootState): boolean => state.isLoadingOffer;
+export const selectLoadingStatusReviews = (state: RootState): boolean => state.isLoadingReviews;
+export const selectLoadingStatusNear = (state: RootState): boolean => state.isLoadingNear;
