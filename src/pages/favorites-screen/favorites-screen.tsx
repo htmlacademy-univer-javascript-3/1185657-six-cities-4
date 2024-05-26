@@ -1,11 +1,14 @@
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link, NavLink } from 'react-router-dom';
 import { CardType } from '../../types/types';
 import CardListComponent from '../../components/card-list/card-list';
-import { useSelector } from 'react-redux';
-import { selectOffers } from '../../store/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthorizationStatus, selectFavorites, selectOffers, selectUserData } from '../../store/selectors';
+import { AppDispatch } from '../../store';
+import { logout } from '../../store/action';
 
 function FavoritesScreen(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
   const offers = useSelector(selectOffers);
   // Функция для фильтрации отелей по наличию закладок
   const filterBookmarkedOffers = (city: string) => offers.filter((offer) => offer.city.name === city && offer.isFavorite);
@@ -13,6 +16,15 @@ function FavoritesScreen(): JSX.Element {
 
   // Получение уникальных городов из списка отелей
   const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
+  const authorizationStatus = useSelector(selectAuthorizationStatus);
+  const userData = useSelector(selectUserData);
+  const favorites = useSelector(selectFavorites);
+
+  const handleLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
+
   return (
     <div className="page">
       <header className="header">
@@ -24,21 +36,31 @@ function FavoritesScreen(): JSX.Element {
               </Link>
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{cntFav}</span>
-                  </NavLink>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
+              {authorizationStatus === AuthorizationStatus.Auth ? (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper"><img src={userData?.avatarUrl}/></div>
+                      <span className="header__user-name user__name">{userData?.email}</span>
+                      <span className="header__favorite-count">{favorites.length}</span>
+                    </NavLink>
+                  </li>
+                  <li className="header__nav-item">
+                    <a className="header__nav-link" href="#" onClick={handleLogoutClick}>
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                </ul>) : (
+                <ul className="header__nav-list">
+                  <li className="header__nav-item user">
+                    <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Login}}>
+                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      </div>
+                      <span className="header__login">Sign in</span>
+                    </NavLink>
+                  </li>
+                </ul>
+              )}
             </nav>
           </div>
         </div>

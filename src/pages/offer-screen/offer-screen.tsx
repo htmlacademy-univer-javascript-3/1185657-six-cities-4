@@ -2,7 +2,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { CardType, Offer } from '../../types/types';
 import { useParams, Link, NavLink, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectOffers, selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear, selectAuthorizationStatus, selectUserData } from '../../store/selectors';
+import { selectCurrentOffer, selectReviews, selectNearbyOffers, selectLoadingStatusOffer, selectLoadingStatusReviews, selectLoadingStatusNear, selectAuthorizationStatus, selectUserData, selectFavorites } from '../../store/selectors';
 import CardListComponent from '../../components/card-list/card-list';
 import ReviewFormComponent from '../../components/review-form/review-form';
 import ReviewListComponent from '../../components/review-list/review-list';
@@ -27,12 +27,12 @@ function OfferScreen(): JSX.Element {
   const currentOffer = useSelector(selectCurrentOffer);
   const reviews = useSelector(selectReviews);
   const nearPlaces = useSelector(selectNearbyOffers);
-  const cntFav = useSelector(selectOffers).filter((offer) => offer.isFavorite).length;
   const isLoadingOffer = useSelector(selectLoadingStatusOffer);
   const isLoadingReviews = useSelector(selectLoadingStatusReviews);
   const isLoadingNear = useSelector(selectLoadingStatusNear);
   const authorizationStatus = useSelector(selectAuthorizationStatus);
   const userData = useSelector(selectUserData);
+  const favorites = useSelector(selectFavorites);
 
   const [hoveredOffer, setHoveredOffer] = useState<Offer | undefined>(undefined);
 
@@ -68,7 +68,7 @@ function OfferScreen(): JSX.Element {
                     <NavLink className="header__nav-link header__nav-link--profile" to={{ pathname: AppRoute.Favorites}}>
                       <div className="header__avatar-wrapper user__avatar-wrapper"><img src={userData?.avatarUrl}/></div>
                       <span className="header__user-name user__name">{userData?.email}</span>
-                      <span className="header__favorite-count">{cntFav}</span>
+                      <span className="header__favorite-count">{favorites.length}</span>
                     </NavLink>
                   </li>
                   <li className="header__nav-item">
