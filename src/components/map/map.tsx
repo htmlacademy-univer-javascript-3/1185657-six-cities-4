@@ -37,7 +37,6 @@ const MapComponent = React.memo(({ city, points, selectedPoint, hoveredPoint }: 
 
   useEffect(() => {
     if (map) {
-      // Центрируем карту на выбранном месте, если оно задано
       if (selectedPoint) {
         map.setView([selectedPoint.location.latitude, selectedPoint.location.longitude], selectedPoint.location.zoom);
       } else {

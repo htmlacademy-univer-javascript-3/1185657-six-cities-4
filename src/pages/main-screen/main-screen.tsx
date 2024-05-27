@@ -45,7 +45,7 @@ function MainScreen(): JSX.Element {
         sorted.sort((a, b) => b.rating - a.rating);
         break;
       default:
-        // 'Popular' or any other case, reset to original order
+
         sorted = [...offers.filter((offer) => offer.city.name === city.name)];
         break;
     }
