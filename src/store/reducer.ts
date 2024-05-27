@@ -1,6 +1,6 @@
 // src/store/reducer.ts
 import { createReducer } from '@reduxjs/toolkit';
-import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login, logout, setFavorites, fetchFavorites, postComment } from './action';
+import { setCity, setOffer, setOffers, setReviews, setNearbyOffers, fetchOffer, fetchReviews, fetchNearbyOffers, fetchOffers, setAuthorizationStatus, checkAuth, setUserData, login, logout, setFavorites, fetchFavorites, postComment, toggleFavoriteStatus } from './action';
 import { City, Offer, Reviews, WideOffer, UserData } from '../types/types';
 import { CITIES, AuthorizationStatus } from '../const';
 
@@ -114,6 +114,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(logout.fulfilled, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
       state.userData = null;
+      state.favorites = [];
     })
     .addCase(setFavorites, (state, action) => {
       state.favorites = action.payload;
@@ -136,6 +137,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(postComment.rejected, (state) => {
       state.isLoadingReviews = false;
+    })
+    .addCase(toggleFavoriteStatus.fulfilled, (state) => {
+      state.isLoadingFavorites = false;
+    })
+    .addCase(toggleFavoriteStatus.pending, (state) => {
+      state.isLoadingFavorites = true;
+    })
+    .addCase(toggleFavoriteStatus.rejected, (state) => {
+      state.isLoadingFavorites = false;
     });
 });
 
