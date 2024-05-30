@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import cityReducer from './cityReducer';
-import offersReducer from './offersReducer';
-import currentOfferReducer from './currentOfferReducer';
-import reviewsReducer from './reviewsReducer';
-import nearbyOffersReducer from './nearbyOffersReducer';
-import authReducer from './authReducer';
-import userDataReducer from './userDataReducer';
-import favoritesReducer from './favoritesReducer';
+import cityReducer from './city-reducer';
+import offersReducer from './offers-reducer';
+import currentOfferReducer from './current-offer-reducer';
+import reviewsReducer from './reviews-reducer';
+import nearbyOffersReducer from './nearby-offers-reducer';
+import authReducer from './auth-reducer';
+import userDataReducer from './user-data-reducer';
+import favoritesReducer from './favorites-reducer';
 
 const rootReducer = combineReducers({
   city: cityReducer,
